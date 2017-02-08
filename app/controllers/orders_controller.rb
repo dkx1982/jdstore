@@ -1,9 +1,10 @@
-class OrderController < ApplicationController
+class OrdersController < ApplicationController
+  before_action :authenticate_user!, only: [:create]
   def create
     @order = Order.new(order_params)
     @order.user = current_user
     @order.total = current_cart.total_price
-    if @orde.save
+    if @order.save
       redirect_to order_path(@order)
     else
       render 'carts/checkout'
